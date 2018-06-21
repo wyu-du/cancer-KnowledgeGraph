@@ -1,0 +1,63 @@
+// Create diseases_inputs
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:///disease_list.csv" AS row
+CREATE (dis_input:Diseases_inputs {dis: row.dis});
+
+// Create hospitals
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:///hospital_list.csv" AS row
+CREATE (hospitals:Hospitals {hospital: row.hospital});
+
+// Create diseases
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:///cancer_info_disease.csv" AS row
+CREATE (dis:Diseases {disease_in: row.disease_in, disease_out: row.disease_out, disease_out_alias: row.disease_out_alias, 概述: row.概述});
+
+// Create diseases_related
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:///edge_cancer.csv" AS row
+CREATE (dis_rel:Diseases_related {source: row.Source, target: row.Target, weight: row.Weight});
+
+// Create diseases_descriptions
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:///cancer_info_disease.csv" AS row
+CREATE (dis_des:Diseases_descriptions {disease_out: row.disease_out, disease_out_alias: row.disease_out_alias, 并发: row.并发, 症状: row.症状});
+
+// Create diseases_treatments
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:///cancer_info_disease.csv" AS row
+CREATE (dis_treat:Diseases_treatments {disease_out: row.disease_out, disease_out_alias: row.disease_out_alias, 治疗: row.治疗, 治愈: row.治愈, 病因: row.病因, 诊断: row.诊断, 预防: row.预防});
+
+// Create doctors
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:///cancer_info_doctor.csv" AS row
+CREATE (doc:Doctors {disease_in: row.disease_in, doctor_out: row.doctor_out, 擅长: row.擅长, 简历: row.简历, 相关医院: row.相关医院});
+
+// Build relations
+MATCH (dis_input:Diseases_inputs), (dis: Diseases)
+WHERE dis_input.dis=dis.disease_in
+CREATE (dis_input)-[r0:Search_out]->(dis)
+
+MATCH (dis_input:Diseases_inputs), (dis: Diseases)
+WHERE dis_input.dis=dis.disease_in
+CREATE (dis)-[r0:Trace_back]->(dis_input)
+
+MATCH (dis:Diseases),(doc:Doctors)
+WHERE dis.disease_in=doc.disease_in
+CREATE (doc)-[r1:Treat]->(dis)
+
+MATCH (dis:Diseases),(dis_rel:Diseases_related)
+WHERE dis.disease_in=dis_rel.source
+CREATE (dis)-[r2:Show_up_together]->(dis_rel)
+
+MATCH (dis:Diseases),(dis_des:Diseases_descriptions)
+WHERE dis.disease_out=dis_des.disease_out
+CREATE (dis)-[r3:Description]->(dis_des)
+
+MATCH (hospital:Hospitals),(doc:Doctors)
+WHERE hospital.hospital=doc.相关医院
+CREATE (doc)-[r4:Belong_to]->(hospital)
+
+MATCH (hospital:Hospitals),(doc:Doctors)
+WHERE hospital.hospital=doc.相关医院
+CREATE (hospital)-[r5:Own]->(doc)
