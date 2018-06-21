@@ -1,7 +1,7 @@
 # Cancer-KnowledgeGraph Demo
 
 ## 数据获取
-用Python的Selenium包编写简易爬虫，获取![中国公众健康网](http://www.chealth.org.cn/)上的如下信息：
+用Python的Selenium包编写简易爬虫，获取<a href='http://www.chealth.org.cn/' target='_blank'>中国公众健康网</a>上的如下信息：
 1. 疾病信息：来自中国公众健康网的常见疾病信息。
 2. 医生信息：来自中国公众健康网的医生信息。
 
