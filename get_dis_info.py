@@ -9,7 +9,7 @@ from selenium import webdriver
 from time import sleep
 import pandas as pd
 
-df=pd.read_csv('outputs/edge_cancer.csv', encoding='utf8')
+df=pd.read_csv('data/edge_cancer.csv', encoding='utf8')
 dis=list(df['Source'])
 dis=list(set(dis))
 
@@ -68,4 +68,4 @@ for d, d_dict in clean_links.items():
         driver2.quit()
 
 df=pd.DataFrame(content)
-df.to_csv('cancer_info_disease.csv', index=False, encoding='utf8')
+df.to_csv('data/cancer_info_disease.csv', index=False, encoding='utf8')
