@@ -19,3 +19,5 @@
 
 ## 数据可视化
 用Neo4j生成可视化数据关系图如下：
+<img src='https://github.com/ddddwy/cancer-KnowledgeGraph/blob/master/graphs/disease_graph.png'/>
+<img src='https://github.com/ddddwy/cancer-KnowledgeGraph/blob/master/graphs/hospital_graph.png'/>
