@@ -26,3 +26,6 @@
 <img src='https://github.com/ddddwy/cancer-KnowledgeGraph/blob/master/graphs/disease_graph.png'/>
 2. 医院关系图谱：<br>
 <img src='https://github.com/ddddwy/cancer-KnowledgeGraph/blob/master/graphs/hospital_graph.png'/>
+
+## Inference
+<a href='http://www.shuang0420.com/2017/09/05/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/' target='_blank'>项目实战--知识图谱初探</a>
